@@ -140,7 +140,7 @@ The prerequisites to build, deploy, run and test the HTTP Echo Server in Python 
 * Unix based operating system
 * Python 3
 
-To source code simply consists of a single python script (_echo_server.py_) which handles the input arguments and starts the HTTP Server with a dedicated request handler which simply echoes the input message, same as in the Java implementation.
+The source code simply consists of a single python script (_echo_server.py_) which handles the input arguments and starts the HTTP Server with a dedicated request handler which simply echoes the input message, same as in the Java implementation.
 
 ```
 import sys, getopt
