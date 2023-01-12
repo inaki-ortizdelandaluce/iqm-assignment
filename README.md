@@ -335,7 +335,7 @@ services:
         container_name: "echo1"
         depends_on:
             - proxy
-        image: echo-server:latest
+        image: echo-server-java:latest
         environment:
             PORT: 9091
             MESSAGE: "Hello from a"
@@ -345,7 +345,7 @@ services:
         container_name: "echo2"
         depends_on:
             - proxy
-        image: echo-server:latest
+        image: echo-server-java:latest
         environment:
             PORT: 9092
             MESSAGE: "Hello from b"
