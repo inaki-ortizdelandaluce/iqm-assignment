@@ -48,8 +48,6 @@ public class EchoHttpServer {
         @Override
         public void handle(HttpExchange e) throws IOException {
         	
-        	System.out.println("Handling request");
-        	
             // set headers
         	Headers headers = e.getResponseHeaders();
         	headers.clear();
