@@ -279,7 +279,7 @@ COPY src/python/echo_server.py .
 EXPOSE $PORT 
 CMD python3 echo-server.py -p "$PORT" -m "$MESSAGE"
 ```
-Similar steps to the previos section can be executed to run this image:
+Similar steps as for the previos section can be executed to run this image:
 ```
 $ cd /path/to/repo/root/folder
 $ docker build -t echo-server-python -f Dockerfile.python .
