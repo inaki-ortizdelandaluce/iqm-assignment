@@ -201,6 +201,7 @@ $ python3 src/python/echo_server.py --port 8080 --message "Hello Python" &
 ```
 Same as for the Java case, once the server is running, the telnet utility can be used to check the server behaves as expected:
 ```
+$ telnet localhost 8080
 Trying ::1...
 telnet: connect to address ::1: Connection refused
 Trying 127.0.0.1...
