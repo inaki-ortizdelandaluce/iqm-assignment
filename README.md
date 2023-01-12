@@ -18,7 +18,7 @@ The prerequisites to build, deploy, run and test the HTTP Echo Server are:
 
 To keep the solution as simple as possible I have decided to use just Maven and standard unix shell-commands to perform the complete software life-cycle. No spetial attention has been paid to unit and component testing for the same sake of simplicity, although placeholders allowing to inject and run the tests have been left in the directory structure.
 
-The source code consists on two Java classes, one providing the command-line interface (_EchoHttpServerCmd.java_) and another with the HTTP Server implementation (_EchoHttpServer.java_). Given the user input is typically and enemy of software robusteness I have included a dedicated class to handle the input arguments simply and nicely using Apache Commons CLI library  although this is not strictly necessary. 
+The source code consists on two Java classes, one providing the command-line interface (_EchoHttpServerCmd.java_) and another with the HTTP Server implementation (_EchoHttpServer.java_). Given the user input is typically an enemy of software robusteness I have included a dedicated class to handle the input arguments using Apache Commons CLI library  although this is not strictly necessary. 
 
 ```
 src/main/java/
