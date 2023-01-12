@@ -194,7 +194,7 @@ if __name__ == '__main__':
     server = EchoHttpServer(int(port), message)
 ```
 
-To run the server just type the following commands:
+To run the server the following commands can be executed:
 ```
 $ cd /path/to/repo/root/folder
 $ python3 src/python/echo_server.py --port 8080 --message "Hello Python" &
@@ -274,6 +274,7 @@ docker stop docker-echo-java
 Alternatively to the Java-based container, it is also provided a dedicated Dockerfile (_Dockerfile.python_) to build an image with the Python HTTP Echo Server implementation described above.
 
 ```
+
 ```
 Similar steps to the previos section can be executed to run this image:
 ```
