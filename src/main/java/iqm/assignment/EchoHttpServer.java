@@ -1,4 +1,4 @@
-package iqm.assessment;
+package iqm.assignment;
 
 import java.io.IOException;
 import java.io.OutputStream;

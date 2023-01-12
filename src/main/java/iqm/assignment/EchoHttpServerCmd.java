@@ -1,4 +1,4 @@
-package iqm.assessment;
+package iqm.assignment;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
