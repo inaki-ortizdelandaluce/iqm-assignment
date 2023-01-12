@@ -287,7 +287,9 @@ $ docker run -d --rm -e PORT=9001 -e MESSAGE="Hello Python World" --name echo-py
 $ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' echo-python
 172.17.0.2
 ```
-And it can be checked that, using the Pyhon-based container, we get the same output than for Java except minor differences on the HTTP headers:
+It can be seen that the total size of the Python-based image is about a third of the Java-based image size. When dockerising an application it is of key importance to streamline the total size of the image to be able to fullfil further scalability requirements which may arise. Therefore this has proven that a Python-based implementation of the HTTP Echo Server has worth the effort.
+
+Finally it can be checked that, using the Pyhon-based container, we get the same output we had for Java except for some minor differences on the HTTP headers:
 ```
 $ telnet 172.17.0.2 9001
 Trying 172.17.0.2...
