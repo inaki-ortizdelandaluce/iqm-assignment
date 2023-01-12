@@ -93,8 +93,84 @@ The prerequisites to build, deploy, run and test the HTTP Echo Server in Python 
 ## Step 2. Dockerise the HTTP Echo Server
 
 ### 2.1 Java
+To dockerise the Java HTTP Echo Server I have chosen the official Amazon's Correto image, which unfortunately is too large compared with, for example, other Alpine-based images. This is one of the reasons why I have decided to provide an alternative implementation in Python, because even if it's not the scope of the exercise, I wanted to show that scalability and optimisation should always be a driving factor as far as software and system infrastrucure are concerned.
+
+Thanks to the automation already achieved when building and packaging the Java application, building a container for the Java solution is very trivial: we just need to copy over the application assemble, define the configurable CLI arguments port and message as environment variables and expose the port to the host as the Dockerfile directives in file _Dockerfile.java_ show:
+```
+FROM amazoncorretto:latest
+COPY target/appassembler/echo-server /root/echo-server
+EXPOSE $PORT 
+CMD /root/echo-server/bin/echo-server.sh -p "$PORT" -m "$MESSAGE"
+```
+
+To build the image the following commands should be executed from the terminal:
+```
+$ cd /path/to/repo/root/folder
+$ docker build -t echo-server-java -f Dockerfile.java .
+```
+
+Once the docker image is built, the HTTP Echo Server container can be run as follows:
+```
+$ docker run -d --rm -e PORT=9000 -e MESSAGE="Hello World" --name docker-echo-java echo-server-java
+```
+To get the IP address in which the service is running we should inspect the container with the following command:
+```
+$ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker-echo-java
+172.17.0.2
+```
+
+Such that we can finally use the telnet utility to check whether the container is exposing the HHTP Echo Server as expected:
+```
+$ telnet 172.17.0.2 9000
+Trying 172.17.0.2...
+Connected to 172.17.0.2.
+Escape character is '^]'.
+GET / HTTP/1.1
+Host: localhost
+
+HTTP/1.1 200 OK
+Date: Thu, 12 Jan 2023 11:39:37 GMT
+Content-type: text/plain; charset=utf-8
+Content-length: 11
+
+Hello World
+```
+
+Finally we should release the resources accordingly:
+```
+docker stop docker-echo-java
+```
 
 ### 2.2 Python
+Alternatively to the Java-based container, it is also provided a dedicated Dockerfile (_Dockerfile.python_) to build an image with the Python HTTP Echo Server implementation described above.
+
+```
+```
+Similar steps to the previos section can be executed to run this image:
+```
+$ cd /path/to/repo/root/folder
+$ docker build -t echo-server-python Dockerfile.python .
+$ docker run -d --rm -e PORT=9001 -e MESSAGE="Hello Python World" --name docker-echo-python echo-server-python
+$ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker-echo-java
+172.17.0.2
+```
+And it can be checked that, using the Pyhon-based container, we get the same output besides minor details on the HTTP headers:
+```
+$ telnet 172.17.0.2 9001
+Trying 172.17.0.2...
+Connected to 172.17.0.2.
+Escape character is '^]'.
+GET / HTTP/1.1
+Host: localhost
+
+HTTP/1.1 200 OK
+Date: Thu, 12 Jan 2023 11:39:37 GMT
+Content-type: text/plain; charset=utf-8
+Content-length: 18
+
+Hello Python World
+```
+
 
 ## Step 3. Docker Compose to route requests to different servers
 Given that Dockerised images of the HTTP Echo Server (either in Python or Java) are already available, we can now build a reverse proxy to delegate the incoming requests to different servers depending on the resource path as requested in the assignment. For the redirect proxy I have chosen an NGINX image in Alpine given the size is very small and the NGINX configuration is pretty straight forward.
@@ -191,8 +267,8 @@ $ docker-compose up -d
 ```
 * We can check whether the compose has been started up successfully and the echo servers are listening with the specified port and message using the following commands:
 ```
-docker ps
-docker-compose logs
+$ docker ps
+$ docker-compose logs
 ```
 
 * Finally, the telnet utility can be used to check the reverse proxy behaves as expected:
