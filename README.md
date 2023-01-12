@@ -149,7 +149,7 @@ Alternatively to the Java-based container, it is also provided a dedicated Docke
 Similar steps to the previos section can be executed to run this image:
 ```
 $ cd /path/to/repo/root/folder
-$ docker build -t echo-server-python Dockerfile.python .
+$ docker build -t echo-server-python -f Dockerfile.python .
 $ docker run -d --rm -e PORT=9001 -e MESSAGE="Hello Python World" --name docker-echo-python echo-server-python
 $ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker-echo-java
 172.17.0.2
