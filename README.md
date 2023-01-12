@@ -140,6 +140,32 @@ The prerequisites to build, deploy, run and test the HTTP Echo Server in Python 
 * Unix based operating system
 * Python 3
 
+To keep it as simple as possible the source code consists on a single python script (_echo_server.py_) which handles the input arguments and starts the HTTP Server with a dedicated request handler which simply echoes the input message, same as in the Java implementation.
+
+To run the server just type the following commands:
+```
+$ cd /path/to/repo/root/folder
+$ python3 src/python/echo_server.py &
+```
+Same as for the Java case, once the server is running, the telnet utility can be used to check the server behaves as expected:
+```
+Trying ::1...
+telnet: connect to address ::1: Connection refused
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+GET / HTTP/1.1
+Host: localhost
+
+127.0.0.1 - - [12/Jan/2023 23:49:38] "GET / HTTP/1.1" 200 -
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.9.13
+Date: Thu, 12 Jan 2023 22:49:38 GMT
+Content-type: text/plain; charset=utf-8
+
+Hello World
+```
+
 ## Step 2. Dockerise the HTTP Echo Server
 
 ### 2.1 Java
