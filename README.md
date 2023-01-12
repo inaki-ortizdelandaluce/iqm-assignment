@@ -1,7 +1,7 @@
 # IQM Assignment
 
 ## Introduction
-This Git repository is my response to the assignment provided by IQM on 10th January 2023. This assignment is part of an undergoing recruitment process for an open vacancy as Quantum Computer Infrastructure Engineer within the company. As requested, I commit to keep this repository and its contents strictly privately among IQM and myself.
+This Git repository is my response to the assignment provided by IQM on 10th January 2023. This assignment is part of an undergoing recruitment process for an open vacancy as Quantum Computer Infrastructure Engineer within the company. As requested, I commit to keep this repository and its contents strictly private among IQM and myself.
 
 ## Goal
 The goal of the assignment is to implement an HTTP Server which simply echoes the input requests, dockerise the resulting software and implement a reverse proxy in Docker Compose to route the incoming request depending on the resource path.
