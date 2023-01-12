@@ -231,3 +231,7 @@ Connection: keep-alive
 
 Hello from b
 ```
+* And last, but not least, the resources are released shutting down the docker compose
+```
+$ docker-compose down
+```
