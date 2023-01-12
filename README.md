@@ -197,7 +197,7 @@ if __name__ == '__main__':
 To run the server just type the following commands:
 ```
 $ cd /path/to/repo/root/folder
-$ python3 src/python/echo_server.py &
+$ python3 src/python/echo_server.py --port 8080 --message "Hello Python" &
 ```
 Same as for the Java case, once the server is running, the telnet utility can be used to check the server behaves as expected:
 ```
@@ -209,13 +209,13 @@ Escape character is '^]'.
 GET / HTTP/1.1
 Host: localhost
 
-127.0.0.1 - - [12/Jan/2023 23:49:38] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [13/Jan/2023 00:16:42] "GET / HTTP/1.1" 200 -
 HTTP/1.0 200 OK
 Server: BaseHTTP/0.6 Python/3.9.13
-Date: Thu, 12 Jan 2023 22:49:38 GMT
+Date: Thu, 12 Jan 2023 23:16:42 GMT
 Content-type: text/plain; charset=utf-8
 
-Hello World
+Hello Python
 ```
 
 ## Step 2. Dockerise the HTTP Echo Server
