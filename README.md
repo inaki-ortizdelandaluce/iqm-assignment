@@ -236,6 +236,6 @@ Hello from b
 $ docker-compose down
 ```
 ## Conclusion
-I hope the steps shown above provides an overall idea on the implementation decisions taken, together with a step-by-step guide on how to reproduce the requested results using the code provided. I wish I have successfully sticked to the bounds hinted in the assignment specification. It has been very fun and I have indeed learned a lot while doing it, which is alsways a great thing. Please do not hesitate to contact me for any further clarification this guide or the code may require.
+I hope the steps shown above provide an overall idea on the implementation decisions taken, together with a step-by-step guide on how to reproduce the requested results using the code provided. I wish I have successfully sticked to the bounds hinted in the assignment specification. It has been very fun and I have indeed learned a lot while doing it, which is alsways a great thing. Please do not hesitate to contact me for any further clarification this guide or the code may require.
 
 Iñaki Ortiz de Landaluce
