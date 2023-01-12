@@ -30,23 +30,22 @@ src/main/java/
 
 ```
 [...]
+
 public class EchoHttpServer {
     
     [...]	
-	public void start() {
-		try {
-	
-			HttpServer server = HttpServer.create(new InetSocketAddress(this.port), 0);
-			server.createContext("/", new EchoHttpHandler(this.message));
-			server.setExecutor(null); 
-			server.start();
-			
-			System.out.print("HTTP Server started\n");
+    
+    public void start() {
 
-		} catch (IOException e) {
-			System.err.println("HTTP Server could not be started");
-			e.printStackTrace();
-		}
+	[...]
+	
+	HttpServer server = HttpServer.create(new InetSocketAddress(this.port), 0);
+	server.createContext("/", new EchoHttpHandler(this.message));
+	server.setExecutor(null); 
+	server.start();
+	
+	[...]
+			
     }
     
     static class EchoHttpHandler implements HttpHandler {
@@ -61,9 +60,9 @@ public class EchoHttpServer {
         public void handle(HttpExchange e) throws IOException {
         	
             // set headers
-        	Headers headers = e.getResponseHeaders();
-        	headers.clear();
-        	headers.add("Content-Type", "text/plain; charset=utf-8");
+            Headers headers = e.getResponseHeaders();
+            headers.clear();
+            headers.add("Content-Type", "text/plain; charset=utf-8");
         	
             e.sendResponseHeaders(200, message.length());
             
