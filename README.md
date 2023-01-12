@@ -28,6 +28,57 @@ src/main/java/
         └── EchoHttpServerCmd.java
 ```
 
+```
+[...]
+public class EchoHttpServer {
+    
+    [...]	
+	public void start() {
+		try {
+	
+			HttpServer server = HttpServer.create(new InetSocketAddress(this.port), 0);
+			server.createContext("/", new EchoHttpHandler(this.message));
+			server.setExecutor(null); 
+			server.start();
+			
+			System.out.print("HTTP Server started\n");
+
+		} catch (IOException e) {
+			System.err.println("HTTP Server could not be started");
+			e.printStackTrace();
+		}
+    }
+    
+    static class EchoHttpHandler implements HttpHandler {
+    	
+    	private String message;
+    	
+    	public EchoHttpHandler(String message) {
+    		this.message = message;
+    	}
+    	
+        @Override
+        public void handle(HttpExchange e) throws IOException {
+        	
+            // set headers
+        	Headers headers = e.getResponseHeaders();
+        	headers.clear();
+        	headers.add("Content-Type", "text/plain; charset=utf-8");
+        	
+            e.sendResponseHeaders(200, message.length());
+            
+            // write response  
+            OutputStream os = e.getResponseBody();
+            os.write(message.getBytes());
+            os.close();
+            
+        }
+    }
+}
+
+```
+
+
 Software dependencies are declared in the Maven's POM file located in the root directory (_pom.xml_) and the actual deployment is delegated using a dedicated maven plugin set (appassembler and assembly) and the corresponding configuration file (_assembly.xml_). With a few lines of configuration, the software can be built and packaged in a directory structure ready to be executed in any platform without major hassle. 
 
 Once you have cloned the git repository under a root folder (_/path/to/repo_), and you open the terminal, there is on single step needed to compile, build, package and assemble the HTTP Echo Server as follows:
