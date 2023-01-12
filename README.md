@@ -80,7 +80,7 @@ public class EchoHttpServer {
 
 Software dependencies are declared in the Maven's POM file located in the root directory (_pom.xml_) and the actual deployment is delegated using a dedicated maven plugin set (appassembler and assembly) and the corresponding configuration file (_assembly.xml_). With a few lines of configuration, the software can be built and packaged in a directory structure ready to be executed in any platform without major hassle. 
 
-Once you have cloned the git repository under a root folder (_/path/to/repo_), and you open the terminal, there is on single step needed to compile, build, package and assemble the HTTP Echo Server as follows:
+Once you have cloned the git repository under a root folder (_/path/to/repo_), and you open the terminal, there is on single step needed to compile, build, package and assemble the HTTP Echo Server:
 ```
 $ cd /path/to/repo/root/folder
 $ mvn clean package
