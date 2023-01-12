@@ -173,7 +173,7 @@ Hello Python World
 
 
 ## Step 3. Docker Compose to route requests to different servers
-Given that Dockerised images of the HTTP Echo Server (either in Python or Java) are already available, we can now build a reverse proxy to delegate the incoming requests to different servers depending on the resource path as requested in the assignment. For the redirect proxy I have chosen an NGINX image in Alpine given the size is very small and the NGINX configuration is pretty straight forward.
+Given that Dockerised images of the HTTP Echo Server (either in Python or Java) are already available, we can now build a reverse proxy to delegate the incoming requests to different servers depending on the resource path as requested in the assignment. For the reverse proxy I have chosen an NGINX image in Alpine given the size is very small and the NGINX configuration is pretty straight forward.
 
 The code is available under the _docker_ folder and consists of a Docker Compose file (_docker-compose.yml_), a Dockerfile (_nignx/Dockerfile_) and an NGINX configuration file (_nginx/nginx.conf_), the latest o build the NGINX proxy image:
 ```
