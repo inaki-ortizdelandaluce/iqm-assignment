@@ -19,7 +19,7 @@ public class EchoHttpServer {
 	public void start() {
 		try {
 	
-			System.out.println("Starting HTTP Server");
+			System.out.println("\nStarting HTTP Server");
 			System.out.println("  Port:" + this.port);
 			System.out.println("  Message:" + this.message);
 			
@@ -61,7 +61,6 @@ public class EchoHttpServer {
             OutputStream os = e.getResponseBody();
             os.write(message.getBytes());
             os.close();
-            System.out.println("Response sent");
             
         }
     }

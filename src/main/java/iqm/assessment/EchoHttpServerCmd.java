@@ -43,16 +43,20 @@ public class EchoHttpServerCmd {
         HelpFormatter helpFormatter = new HelpFormatter();
         helpFormatter.setNewLine("\n");
         helpFormatter.setWidth(120);
-        helpFormatter.printHelp("echo-http-server.sh", getOptions(), true);
+        helpFormatter.printHelp("echo-server.sh", getOptions(), true);
     }
     
     private static Options getOptions() {
         Options options = new Options();
         Option portOption = Option.builder().longOpt(OPTION_PORT_LONG).option(OPTION_PORT)
+        		.argName("integer")
+        		.desc("HTTP Server Port, e.g. 8080")
                 .required(true)
                 .hasArg(true).build();
 
         Option messageOption = Option.builder().longOpt(OPTION_MESSAGE_LONG).option(OPTION_MESSAGE)
+                .argName("text")
+                .desc("Message enclosed in double quotes, e.g. \"Hello World\"")
                 .required(true)
                 .hasArg(true).build();
 
