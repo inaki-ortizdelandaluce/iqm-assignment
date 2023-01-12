@@ -1,0 +1,28 @@
+services:
+    proxy:
+        container_name: "proxy"
+        image: echo-proxy
+        build: nginx
+        ports:
+            - 9090:9090
+        restart: always
+ 
+    echo1:
+        container_name: "echo1"
+        depends_on:
+            - proxy
+        image: echo-server:latest
+        environment:
+            PORT: 9091
+            MESSAGE: "Hello from a"
+        restart: always
+ 
+    echo2:
+        container_name: "echo2"
+        depends_on:
+            - proxy
+        image: echo-server:latest
+        environment:
+            PORT: 9092
+            MESSAGE: "Hello from b"
+        restart: always
