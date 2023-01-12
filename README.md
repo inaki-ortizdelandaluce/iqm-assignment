@@ -240,11 +240,11 @@ $ docker build -t echo-server-java -f Dockerfile.java .
 
 Once the docker image is built, the HTTP Echo Server container can be run as follows:
 ```
-$ docker run -d --rm -e PORT=9000 -e MESSAGE="Hello World" --name docker-echo-java echo-server-java
+$ docker run -d --rm -e PORT=9000 -e MESSAGE="Hello World" --name echo-java echo-server-java
 ```
 To get the IP address in which the service is running we should inspect the container with the following command:
 ```
-$ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker-echo-java
+$ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' echo-java
 172.17.0.2
 ```
 
@@ -267,24 +267,27 @@ Hello World
 
 Finally we should release the resources accordingly:
 ```
-docker stop docker-echo-java
+docker stop echo-java
 ```
 
 ### 2.2 Python
 Alternatively to the Java-based container, it is also provided a dedicated Dockerfile (_Dockerfile.python_) to build an image with the Python HTTP Echo Server implementation described above.
 
 ```
-
+FROM python:3.8.2-alpine
+COPY src/python/echo_server.py .
+EXPOSE $PORT 
+CMD python3 echo-server.py -p "$PORT" -m "$MESSAGE"
 ```
 Similar steps to the previos section can be executed to run this image:
 ```
 $ cd /path/to/repo/root/folder
 $ docker build -t echo-server-python -f Dockerfile.python .
-$ docker run -d --rm -e PORT=9001 -e MESSAGE="Hello Python World" --name docker-echo-python echo-server-python
-$ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker-echo-java
+$ docker run -d --rm -e PORT=9001 -e MESSAGE="Hello Python World" --name echo-python echo-server-python
+$ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' echo-python
 172.17.0.2
 ```
-And it can be checked that, using the Pyhon-based container, we get the same output besides minor details on the HTTP headers:
+And it can be checked that, using the Pyhon-based container, we get the same output than for Java except minor differences on the HTTP headers:
 ```
 $ telnet 172.17.0.2 9001
 Trying 172.17.0.2...
