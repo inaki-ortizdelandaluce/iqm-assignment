@@ -6,7 +6,7 @@ This Git repository is my response to the assignment provided by IQM on 10th Jan
 ## Goal
 The goal of the assignment is to implement an HTTP Server which simply echoes a message upon every input request, dockerise the resulting software and implement a reverse proxy in Docker Compose to route the incoming requests depending on the resource path.
 
-Hereafter, I will list the different technical solutions proposed and will also detail the steps to be followed to reproduce the expected behaviour of the infrastructure. I have implemented solutions in two different programming languages, Java and Python, to take the chance to show different technical skills I may have, and to allow for further disgression on different topics like scalability, robustness and automation. The Java approach is slightly more complex, also due to the own complexity of the language, while the Python one goes straight to the point.
+Hereafter, I will list the different technical solutions proposed and will also detail the steps to be followed to reproduce the expected behaviour of the infrastructure. I have implemented solutions in two different programming languages, Java and Python, to take the chance to show different technical skills I may have, and to allow for further disgression on different topics like scalability, robustness and automation. The Java approach is slightly more complex, also due to the own complexity and verbosity of the language, while the Python one goes straight to the point.
 
 ## Step 1. Build an HTTP Echo Server
 
