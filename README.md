@@ -108,7 +108,7 @@ docker/
     └── nginx.conf
 ```
 
-The Docker Compose file implements three services: the reverse proxy listening on port 9090, and two echo servers each one listening in a different port (i.e. 9091 and 9092) and providing a different message. As it can be seen in the compose file, the proxy is build as defined in the Dockerfile underneath the _nginx_ directory, which is where the magic of the proxy redirection happens. 
+The Docker Compose file implements three services: the reverse proxy listening on port 9090, and two echo servers each one listening in a different port (i.e. 9091 and 9092) and providing a different message. As it can be seen in the compose file, the proxy is built as defined in the Dockerfile underneath the _nginx_ directory, which is where the magic of the proxy redirection happens. 
 
 ```
 services:
