@@ -26,8 +26,6 @@ src/main/java/
     └── assessment
         ├── EchoHttpServer.java
         └── EchoHttpServerCmd.java
-
-2 directories, 2 files
 ```
 
 Software dependencies are declared in the Maven's POM file located in the root directory (_pom.xml_) and the actual deployment is delegated using a dedicated maven plugin set (appassembler and assembly) and the corresponding configuration file (_assembly.xml_). With a few lines of configuration, the software can be built and packaged in a directory structure ready to be executed in any platform without major hassle. 
@@ -86,77 +84,119 @@ Hello World
 
 
 ### 1.2 Python
-_TBW_
+The benefits of relying on existing building and automation tools have already been shown with the Java implementation. However, for scalability reasons related to the Docker image sizes that we will use later, it would be much better to have a Python implementation. Hence a bare borne alternative solution has been written in Python. For the sake of simplicity there will be no Python packaging in this case, neither a virtual environment set-up, just a simple script which gets the things done.
 
+The prerequisites to build, deploy, run and test the HTTP Echo Server in Python are:
+* Unix based operating system
+* Python 3
 
-## Java Implementation
+## Step 2. Dockerise the HTTP Echo Server
 
+### 2.1 Java
 
-Requirements:
-Java
-Maven
-Docker
-tar
-telnet
-Ports available
+### 2.2 Python
 
-LINUX
-=====
-1) 
-$ mvn clean package
-$ cd target/
-$ tar xfz echo-server.tar.gz
-$ cd echo-server-1.0/bin/
-$ ./echo-server.sh -p 9095 -m "Hello World" &
-$ telnet localhost 9095
-Trying ::1...
-Connected to localhost.
-Escape character is '^]'.
-GET / HTTP/1.1
-Host: localhost
+## Step 3. Docker Compose to route requests to different servers
+Given that Dockerised images of the HTTP Echo Server (either in Python or Java) are already available, we can now build a reverse proxy to delegate the incoming requests to different servers depending on the resource path as requested in the assignment. For the redirect proxy I have chosen an NGINX image in Alpine given the size is very small and the NGINX configuration is pretty straight forward.
 
-Handling request
-HTTP/1.1 200 OK
-Date: Thu, 12 Jan 2023 12:44:09 GMT
-Content-type: text/plain; charset=utf-8
-Content-length: 11
+The code is available under the _docker_ folder and consists of a Docker Compose file (_docker-compose.yaml_), a Dockerfile and an NGINX configuration file to build the NGINX proxy image:
+```
+docker/
+├── docker-compose.yml
+└── nginx
+    ├── Dockerfile
+    └── nginx.conf
+```
 
-Hello World
-$ ps auxwww | grep echo-server
-$ kill -9 <pid>
+The Docker Compose file implements three services: the reverse proxy listening on port 9090, and two echo servers each one listening in a different port (i.e. 9091 and 9092) and providing a different message. As it can be seen in the compose file, the proxy is build as defined in the Dockerfile underneath the _nginx_ directory, which is where the magic of the proxy redirection happens. 
 
-2) 
-$ mvn clean package
-$ scp -r Dockerfile docker target/appassembler ssh.esac.esa.int:.
-$ scp -r Dockerfile appassembler docker bcops@bpcspsdockdev02.evsp.lan:/home/bcops/deleteme/
-$ ssh bcops@bpcspsdockdev02.evsp.lan
-$ mv appassembler target/
+```
+services:
+    proxy:
+        container_name: "proxy"
+        image: echo-proxy
+        build: nginx
+        ports:
+            - 9090:9090
+        restart: always
+ 
+    echo1:
+        container_name: "echo1"
+        depends_on:
+            - proxy
+        image: echo-server:latest
+        environment:
+            PORT: 9091
+            MESSAGE: "Hello from a"
+        restart: always
+ 
+    echo2:
+        container_name: "echo2"
+        depends_on:
+            - proxy
+        image: echo-server:latest
+        environment:
+            PORT: 9092
+            MESSAGE: "Hello from b"
+        restart: always
+```
 
-$ docker build -t echo-server .
-$ docker run -d --rm -e PORT=9000 -e MESSAGE="Hello World" --name echo-server-test echo-server
-$ docker logs echo-server-test
-$ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' echo-server-test
-172.17.0.2
-$ telnet 172.17.0.2 9000
-Trying 172.17.0.2...
-Connected to 172.17.0.2.
-Escape character is '^]'.
-GET / HTTP/1.1
-Host: localhost
+In the NGINX configuration file (_docker/nginx/nginx.conf_), I have declared two upstream servers corresponding to the echo servers running on port 9091 and 9092, and the proxy server listening on 9090 which is configured such that requests are redirected to either one or the other echo servers depending on the resource path (/a or /b):
+```
+worker_processes 1;
+  
+events { worker_connections 1024; }
 
-HTTP/1.1 200 OK
-Date: Thu, 12 Jan 2023 11:39:37 GMT
-Content-type: text/plain; charset=utf-8
-Content-length: 11
+http {
 
-Hello World
-$ docker stop echo-server-test
+    sendfile on;
 
-3)
-cd docker
-docker-compose up -d (docker-compose up --build)
+    upstream docker-echo1 {
+        server echo1:9091;
+    }
+
+    upstream docker-echo2 {
+        server echo2:9092;
+    }
+    
+    proxy_set_header   Host $host;
+    proxy_set_header   X-Real-IP $remote_addr;
+    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header   X-Forwarded-Host $server_name;
+    
+    server {
+        listen 9090;
+ 
+        location ^~ /a {
+            proxy_pass         http://docker-echo1/;
+            proxy_redirect     off;
+        }
+
+        location ^~ /b {
+            proxy_pass         http://docker-echo2/;
+            proxy_redirect     off;
+        }
+
+    }
+}
+```
+To run the Docker Compose and check everything is working as expected, the following steps are needed:
+
+* First we need to make sure that the ports declared in the compose file and the nginx configuration file are available. If this is not the case another set must be selected.
+* Then we startup the compose in detached mode:
+```
+$ cd /path/to/repo/root/folder
+$ cd docker
+$ docker-compose up -d
+```
+* We can check whether the compose has been started up successfully and the echo servers a listening with the specified port and message using the following commands:
+```
 docker ps
 docker-compose logs
+```
+
+* Finally, the telnet utility can be used to check the reverse proxy behaves as expected:
+```
 $ telnet localhost 9090
 Trying 172.0.0.1...
 Connected to 172.0.0.1.
@@ -173,7 +213,8 @@ Content-Length: 12
 Connection: keep-alive
 
 Hello from a
-
+```
+```
 $ telnet localhost 9090
 Trying 172.0.0.1...
 Connected to 172.0.0.1.
@@ -189,6 +230,4 @@ Content-Length: 12
 Connection: keep-alive
 
 Hello from b
-
-$ docker-compose stop
-$ docker-compose down
+```
