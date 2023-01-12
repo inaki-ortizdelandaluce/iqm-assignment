@@ -106,7 +106,7 @@ Finally to start-up the server with a given port and message, e.g. port 9095 and
 $ ./echo-server.sh -p 9095 -m "Hello World" &
 ```
 
-Once the server is started, a few lines are shown on the terminal console indicating the server has started up sucessfully. No specific logging mechanism other the printing out to the console has been envisaged towards a achieving a quick and simple solution. In case the port is already in use and exception is thrown and no specific exception handling is provided for the same reasons.
+Once the server is started, a few lines are shown on the terminal console indicating the server has started up sucessfully. No specific logging mechanism other the printing out to the console has been envisaged towards a achieving a quick and simple solution. In case the port is already in use an exception is thrown and no specific error handling is provided for the same reasons.
 ```
 Starting HTTP Server
   Port:9095
