@@ -189,7 +189,7 @@ $ cd /path/to/repo/root/folder
 $ cd docker
 $ docker-compose up -d
 ```
-* We can check whether the compose has been started up successfully and the echo servers a listening with the specified port and message using the following commands:
+* We can check whether the compose has been started up successfully and the echo servers are listening with the specified port and message using the following commands:
 ```
 docker ps
 docker-compose logs
