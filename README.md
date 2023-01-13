@@ -173,6 +173,7 @@ class EchoHttpHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type','text/plain; charset=utf-8')
         self.end_headers()
         self.wfile.write(bytes(message, "utf-8"))
+	self.wfile.write(bytes("\n", "utf-8"))
         return
 
 
