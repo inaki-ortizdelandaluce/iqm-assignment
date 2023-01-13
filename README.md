@@ -427,14 +427,10 @@ Content-Length: 12
 Connection: keep-alive
 
 Hello from a
-```
-```
-$ telnet localhost 9090
-Trying 172.0.0.1...
-Connected to 172.0.0.1.
-Escape character is '^]'.
+
 GET /b HTTP/1.1
 Host: localhost
+
 
 HTTP/1.1 200 OK
 Server: nginx/1.23.3
