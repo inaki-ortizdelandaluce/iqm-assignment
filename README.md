@@ -300,12 +300,13 @@ Escape character is '^]'.
 GET / HTTP/1.1
 Host: localhost
 
-HTTP/1.1 200 OK
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.8.2
 Date: Thu, 12 Jan 2023 11:39:37 GMT
 Content-type: text/plain; charset=utf-8
-Content-length: 18
 
 Hello Python World
+Connection closed by foreign host.
 ```
 Finally we should release the resources accordingly:
 ```
