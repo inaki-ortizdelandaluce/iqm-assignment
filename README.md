@@ -284,7 +284,7 @@ Similar steps as for the previos section can be executed to run this image:
 ```
 $ cd /path/to/repo/root/folder
 $ docker build -t echo-server-python -f Dockerfile.python .
-$ docker run -d --rm -e PORT=9001 -e MESSAGE="Hello Python World" --name echo-python echo-server-python
+$ docker run --rm -e PORT=9001 -e MESSAGE="Hello Python World" --name echo-python echo-server-python
 $ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' echo-python
 172.17.0.2
 ```
