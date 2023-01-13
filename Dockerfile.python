@@ -1,4 +1,5 @@
 FROM python:3.8.2-alpine
 COPY src/python/echo_server.py .
+ENV PYTHONUNBUFFERED=1
 EXPOSE $PORT 
-CMD python3 echo-server.py -p "$PORT" -m "$MESSAGE"
+CMD python3 echo_server.py -p "$PORT" -m "$MESSAGE"

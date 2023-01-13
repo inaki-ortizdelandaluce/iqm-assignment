@@ -1,6 +1,7 @@
 import sys, getopt
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
+
 class EchoHttpServer:
 
     def __init__(self, port, message):
@@ -9,7 +10,7 @@ class EchoHttpServer:
             EchoHttpHandler(message, *args)
 
         try:
-            server = HTTPServer(('localhost', port), get_handler)
+            server = HTTPServer(('0.0.0.0', port), get_handler)
             print('Starting HTTP Server, use <Ctrl-C> to stop')
             server.serve_forever()
         except KeyboardInterrupt:
@@ -28,6 +29,7 @@ class EchoHttpHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type','text/plain; charset=utf-8')
         self.end_headers()
         self.wfile.write(bytes(message, "utf-8"))
+        self.wfile.write(bytes("\n", "utf-8"))
         return
 
 
@@ -45,7 +47,5 @@ if __name__ == '__main__':
             port = arg
         elif opt in ("-m", "--message"):
             message = arg
-        
     server = EchoHttpServer(int(port), message)
-
 
