@@ -305,7 +305,10 @@ Content-length: 18
 
 Hello Python World
 ```
-
+Finally we should release the resources accordingly:
+```
+docker stop echo-python
+```
 
 ## Step 3. Docker Compose to route requests to different servers
 Given that Dockerised images of the HTTP Echo Server (either in Python or Java) are already available, we can now build a reverse proxy to delegate the incoming requests to different servers depending on the resource path as requested in the assignment. For the reverse proxy I have chosen an NGINX image in Alpine given the size is very small and the NGINX configuration is pretty straight forward.
