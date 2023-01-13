@@ -154,7 +154,7 @@ class EchoHttpServer:
             EchoHttpHandler(message, *args)
 
         try:
-            server = HTTPServer(('localhost', port), get_handler)
+            server = HTTPServer(('0.0.0.0', port), get_handler)
             print('Starting HTTP Server, use <Ctrl-C> to stop')
             server.serve_forever()
         except KeyboardInterrupt:
@@ -276,6 +276,7 @@ Alternatively to the Java-based container, it is also provided a dedicated Docke
 ```
 FROM python:3.8.2-alpine
 COPY src/python/echo_server.py .
+ENV PYTHONUNBUFFERED=1
 EXPOSE $PORT 
 CMD python3 echo-server.py -p "$PORT" -m "$MESSAGE"
 ```
